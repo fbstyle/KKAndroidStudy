@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="titles">
+        <item>TabLayout结合ViewPager实现导航栏</item>
+    </array>
+
+    <array name="tabtitles">
+        <item>最新</item>
+        <item>最热</item>
+        <item>消息</item>
+        <item>我的</item>
+        <item>新闻</item>
+        <item>综艺</item>
+        <item>娱乐</item>
+        <item>体育</item>
+    </array>
+</resources>
