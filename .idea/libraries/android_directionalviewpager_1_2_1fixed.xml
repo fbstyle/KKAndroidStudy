@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="android-directionalviewpager-1.2.1fixed">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/android-directionalviewpager-1.2.1fixed.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -36,10 +38,12 @@ public class MainActivity extends Activity {
                     case 0:
                         startActivity(TabLayoutViewPagerActivity.class);
                         break;
+                    case 1:
+                        startActivity(DirectionalViewPagerActivity.class);
+                        break;
                 }
             }
         });
-
     }
 
     public void startActivity(Class<?> activity) {
