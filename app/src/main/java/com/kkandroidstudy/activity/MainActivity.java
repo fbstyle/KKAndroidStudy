@@ -41,6 +41,9 @@ public class MainActivity extends Activity {
                     case 1:
                         startActivity(DirectionalViewPagerActivity.class);
                         break;
+                    case 2:
+                        startActivity(CardViewActivity.class);
+                        break;
                 }
             }
         });

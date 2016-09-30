@@ -3,6 +3,7 @@
     <array name="titles">
         <item>TabLayout结合ViewPager实现导航栏</item>
         <item>DirectionalViewPager的基本用法</item>
+        <item>CardView的基本用法</item>
     </array>
 
     <array name="tabtitles">
