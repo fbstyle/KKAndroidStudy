@@ -44,6 +44,9 @@ public class MainActivity extends Activity {
                     case 2:
                         startActivity(CardViewActivity.class);
                         break;
+                    case 3:
+                        startActivity(AppBarLayoutActivity.class);
+                        break;
                 }
             }
         });

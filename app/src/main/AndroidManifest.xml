@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".activity.TabLayoutViewPagerActivity" />
         <activity android:name=".activity.DirectionalViewPagerActivity" />
-        <activity android:name=".activity.CardViewActivity"></activity>
+        <activity android:name=".activity.CardViewActivity" />
+        <activity android:name=".activity.AppBarLayoutActivity"></activity>
     </application>
 
 </manifest>
