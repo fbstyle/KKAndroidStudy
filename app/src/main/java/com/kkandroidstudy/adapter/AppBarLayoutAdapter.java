@@ -2,6 +2,7 @@ package com.kkandroidstudy.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,20 @@ public class AppBarLayoutAdapter extends RecyclerView.Adapter<AppBarLayoutAdapte
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        holder.tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("getAdapterPosition 1", holder.getAdapterPosition() + "");
+                list.remove(holder.getAdapterPosition());
+                Log.e("getAdapterPosition 2", holder.getAdapterPosition() + "");
+                notifyItemRemoved(holder.getAdapterPosition());
+                Log.e("getAdapterPosition 3", holder.getAdapterPosition() + "");
+                Log.e("holder.getLayoutPosi", holder.getLayoutPosition() + "");
+                Log.e(" getItemCount()", getItemCount() + "");
+                notifyItemRangeChanged(holder.getLayoutPosition(), getItemCount() - holder.getLayoutPosition());
+            }
+        });
         //设置数据源
         holder.tv.setText(list.get(position));
     }

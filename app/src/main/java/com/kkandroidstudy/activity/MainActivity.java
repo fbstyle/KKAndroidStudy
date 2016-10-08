@@ -47,6 +47,12 @@ public class MainActivity extends Activity {
                     case 3:
                         startActivity(AppBarLayoutActivity.class);
                         break;
+                    case 4:
+                        startActivity(RecyclerViewPartialRefreshActivity.class);
+                        break;
+                    case 5:
+                        startActivity(CustomCameraActivity.class);
+                        break;
                 }
             }
         });

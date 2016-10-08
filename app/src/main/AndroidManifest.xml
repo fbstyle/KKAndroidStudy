@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kkandroidstudy">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +22,10 @@
         <activity android:name=".activity.TabLayoutViewPagerActivity" />
         <activity android:name=".activity.DirectionalViewPagerActivity" />
         <activity android:name=".activity.CardViewActivity" />
-        <activity android:name=".activity.AppBarLayoutActivity"></activity>
+        <activity android:name=".activity.AppBarLayoutActivity" />
+        <activity android:name=".activity.RecyclerViewPartialRefreshActivity" />
+        <activity android:name=".activity.CustomCameraActivity" />
+        <activity android:name=".activity.TakePictureResultActivity"></activity>
     </application>
 
 </manifest>
