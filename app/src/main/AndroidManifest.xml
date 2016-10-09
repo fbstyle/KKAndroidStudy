@@ -18,7 +18,8 @@
         <activity android:name=".activity.TabLayoutViewPagerActivity" />
         <activity android:name=".activity.DirectionalViewPagerActivity" />
         <activity android:name=".activity.CardViewActivity" />
-        <activity android:name=".activity.AppBarLayoutActivity"></activity>
+        <activity android:name=".activity.AppBarLayoutActivity" />
+        <activity android:name=".activity.CollapsingToolbarLayoutActivity"></activity>
     </application>
 
 </manifest>

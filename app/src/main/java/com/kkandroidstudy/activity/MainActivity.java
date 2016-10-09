@@ -47,6 +47,9 @@ public class MainActivity extends Activity {
                     case 3:
                         startActivity(AppBarLayoutActivity.class);
                         break;
+                    case 4:
+                        startActivity(CollapsingToolbarLayoutActivity.class);
+                        break;
                 }
             }
         });
