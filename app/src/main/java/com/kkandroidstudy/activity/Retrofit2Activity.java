@@ -69,7 +69,7 @@ public class Retrofit2Activity extends AppCompatActivity implements View.OnClick
     }
 
     private void postThree() {
-        RetrofitService service = RetrofitClient.getInstance();
+        RetrofitService service = RetrofitClient.getInstance(this);
         RequestInfo requestInfo = new RequestInfo();
         requestInfo.setApp("idcard.get");
         requestInfo.setAppkey("10003");
@@ -91,7 +91,7 @@ public class Retrofit2Activity extends AppCompatActivity implements View.OnClick
     }
 
     private void postOne() {
-        RetrofitService service = RetrofitClient.getInstance();
+        RetrofitService service = RetrofitClient.getInstance(this);
         Call<PersonInfo> personInfo = service.postOnePersonInfo("idcard.get", "10003", "b59bc3ef6191eb9f747dd4e83c99f2a4", "json", "110101199001011114");
         personInfo.enqueue(new Callback<PersonInfo>() {
             @Override
@@ -107,7 +107,7 @@ public class Retrofit2Activity extends AppCompatActivity implements View.OnClick
     }
 
     private void postTwo() {
-        RetrofitService service = RetrofitClient.getInstance();
+        RetrofitService service = RetrofitClient.getInstance(this);
         Map<String, String> map = new HashMap<>();
         map.put("app", "idcard.get");
         map.put("appkey", "10003");
@@ -130,7 +130,7 @@ public class Retrofit2Activity extends AppCompatActivity implements View.OnClick
 
 
     private void getTwo() {
-        RetrofitService service = RetrofitClient.getInstance();
+        RetrofitService service = RetrofitClient.getInstance(this);
         Map<String, String> map = new HashMap<>();
         map.put("app", "idcard.get");
         map.put("appkey", "10003");
@@ -152,7 +152,7 @@ public class Retrofit2Activity extends AppCompatActivity implements View.OnClick
     }
 
     private void getOne() {
-        RetrofitService service = RetrofitClient.getInstance();
+        RetrofitService service = RetrofitClient.getInstance(this);
         Call<PersonInfo> personInfo = service.getOnePersonInfo("idcard.get", "10003", "b59bc3ef6191eb9f747dd4e83c99f2a4", "json", "110101199001011114");
         personInfo.enqueue(new Callback<PersonInfo>() {
             @Override

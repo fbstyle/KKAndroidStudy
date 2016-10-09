@@ -1,6 +1,7 @@
 package com.kkandroidstudy.application;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.kkandroidstudy.BuildConfig;
 import com.orhanobut.logger.LogLevel;

@@ -1,13 +1,21 @@
 package com.kkandroidstudy.network;
 
-import com.kkandroidstudy.BuildConfig;
-import com.kkandroidstudy.iterface.RetrofitService;
+import android.content.Context;
+import android.os.Environment;
 
+import com.kkandroidstudy.BuildConfig;
+import com.kkandroidstudy.application.KKApplication;
+import com.kkandroidstudy.iterface.RetrofitService;
+import com.kkandroidstudy.util.NetWorkUtil;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
+import okhttp3.CacheControl;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.JavaNetCookieJar;
@@ -29,8 +37,10 @@ public class RetrofitClient {
      * {"success":"1","result":{"status":"ALREADY_ATT","par":"110101","idcard":"110101199001011114","born":"1990年01月01日","sex":"男","att":"北京市 东城区 ","postno":"100000","areano":"010","style_simcall":"中国,北京","style_citynm":"中华人民共和国,北京市"}}
      */
     private static String baseUrl = " http://api.k780.com:88";
+    private static Context context;
 
-    public static RetrofitService getInstance() {
+    public static RetrofitService getInstance(Context context) {
+        RetrofitClient.context=context;
         OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
         //设置超时
         builder.connectTimeout(15, TimeUnit.SECONDS);
@@ -47,6 +57,8 @@ public class RetrofitClient {
             //设置 Debug Log 模式
             builder.addInterceptor(loggingInterceptor);
         }
+
+      buildCache(builder, true);
 
         /**
          *  添加公共参数拦截器
@@ -73,6 +85,50 @@ public class RetrofitClient {
         RetrofitService service = retrofit.create(RetrofitService.class);
         return service;
     }
+
+    private static void buildCache(OkHttpClient.Builder builder, boolean isCache) {
+        if (!isCache)
+            return;
+        //设置缓存路径
+        File cacheFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "kkcache");
+        //设置缓存大小 20M
+        Cache cache = new Cache(cacheFile, 20 * 1024 * 1024);
+        builder.cache(cache).addInterceptor(cacheInterceptor);
+    }
+
+    /**
+     * 缓存
+     */
+    static Interceptor cacheInterceptor = new Interceptor() {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            //没网
+            if (!NetWorkUtil.isConnectedByState(context)) {
+                request = request.newBuilder()
+                        .cacheControl(CacheControl.FORCE_CACHE)
+                        .build();
+            }
+            Response response = chain.proceed(request);
+            if (NetWorkUtil.isConnectedByState(context)) {
+                int maxAge = 0;
+                // 有网络时 设置缓存超时时间0个小时
+                response.newBuilder()
+                        .header("Cache-Control", "public, max-age=" + maxAge)
+                        .removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
+                        .build();
+            } else {
+                // 无网络时，设置超时为4周
+                int maxStale = 60 * 60 * 24 * 28;
+                response.newBuilder()
+                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                        .removeHeader("Pragma")
+                        .build();
+            }
+            return response;
+        }
+    };
+
 
     /**
      * 公共参数
@@ -103,9 +159,16 @@ public class RetrofitClient {
         }
     };
 
+    /**
+     * 配置Cookie
+     *
+     * @param builder
+     */
     static public void buildCookie(OkHttpClient.Builder builder) {
         CookieManager cookieManager = new CookieManager();
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         builder.cookieJar(new JavaNetCookieJar(cookieManager));
     }
+
+
 }
