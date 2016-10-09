@@ -62,6 +62,9 @@ public class MainActivity extends Activity {
                     case 8:
                         startActivity(LoggerActivity.class);
                         break;
+                    case 9:
+                        startActivity(CollapsingToolbarLayoutActivity.class);
+                        break;
                 }
             }
         });

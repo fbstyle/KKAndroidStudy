@@ -30,6 +30,7 @@
         <activity android:name=".activity.FloatingActionButtonActivity" />
         <activity android:name=".activity.Retrofit2Activity" />
         <activity android:name=".activity.LoggerActivity"></activity>
+        <activity android:name=".activity.CollapsingToolbarLayoutActivity"></activity>
     </application>
 
 </manifest>
