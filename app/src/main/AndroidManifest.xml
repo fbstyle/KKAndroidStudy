@@ -25,7 +25,8 @@
         <activity android:name=".activity.AppBarLayoutActivity" />
         <activity android:name=".activity.RecyclerViewPartialRefreshActivity" />
         <activity android:name=".activity.CustomCameraActivity" />
-        <activity android:name=".activity.TakePictureResultActivity"></activity>
+        <activity android:name=".activity.TakePictureResultActivity" />
+        <activity android:name=".activity.FloatingActionButtonActivity"></activity>
     </application>
 
 </manifest>

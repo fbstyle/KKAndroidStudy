@@ -53,6 +53,9 @@ public class MainActivity extends Activity {
                     case 5:
                         startActivity(CustomCameraActivity.class);
                         break;
+                    case 6:
+                        startActivity(FloatingActionButtonActivity.class);
+                        break;
                 }
             }
         });
