@@ -5,18 +5,18 @@
     android:layout_height="match_parent"
     tools:context="com.kkandroidstudy.activity.CustomCameraActivity">
 
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <Button
         android:id="@+id/btn_capture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Capture"
-        android:visibility="visible" />
-
-    <SurfaceView
-        android:id="@+id/surfaceView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/btn_capture" />
+        android:layout_marginBottom="20dp"
+        android:text="拍照" />
 
 </RelativeLayout>

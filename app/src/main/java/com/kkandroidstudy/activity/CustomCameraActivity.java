@@ -1,13 +1,11 @@
 package com.kkandroidstudy.activity;
 
 import android.content.Intent;
-import android.graphics.ImageFormat;
-import android.graphics.Picture;
+import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -16,9 +14,9 @@ import android.widget.Button;
 import com.kkandroidstudy.R;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class CustomCameraActivity extends AppCompatActivity implements View.OnClickListener, SurfaceHolder.Callback {
     private Button btn_capture;
@@ -74,38 +72,49 @@ public class CustomCameraActivity extends AppCompatActivity implements View.OnCl
      * 获取预览相机图像
      */
     private void capture() {
-        Camera.Parameters parameters = camera.getParameters();
-        //设置图片格式
-        parameters.setPictureFormat(ImageFormat.JPEG);
-        //设置图片大小
-        parameters.setPreviewSize(800, 480);
-        parameters.setPictureSize(800, 480);
-        parameters.setJpegQuality(100);
-        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-        camera.autoFocus(new Camera.AutoFocusCallback() {
-            @Override
-            public void onAutoFocus(boolean success, Camera camera) {
-                if (success) {
-                    camera.takePicture(null, null, pictureCallBack);
-                }
-            }
-        });
+        camera.takePicture(null, null, pictureCallBack);
     }
 
     /**
      * 获取Camera对象
      */
-    private Camera getCamera() {
-        if (camera == null) {
-            try {
-                camera = Camera.open();
-            } catch (Exception e) {
-                e.printStackTrace();
-                camera = null;
+    public Camera getCamera(int id) {
+        Camera c = null;
+        int numCams = Camera.getNumberOfCameras();
+        try {
+            if (numCams > 1) {
+                c = Camera.open(id);
+            } else {
+                c = Camera.open();
             }
+            // get Camera parameters
+            Camera.Parameters mParams = c.getParameters();
+            c.setDisplayOrientation(90);
+            List<String> focusModes = mParams.getSupportedFocusModes();
+            if (focusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+                mParams.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            }
+//            mParams.setExposureCompensation(0);
+            mParams.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
+            // set Camera parameters
+            mParams.setPictureSize(1280, 720);
+            mParams.setPreviewSize(1280, 720);
+            mParams.setPictureFormat(PixelFormat.JPEG);
+            //设置图片质量
+            mParams.setJpegQuality(100);
+            if (id == 1) {
+                mParams.setRotation(270);
+            } else {
+                mParams.setRotation(90);
+            }
+            c.setParameters(mParams);
+            mParams = null;
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
         }
-        return camera;
+        return c;
     }
+
 
     /**
      * 开始预览相机内容
@@ -113,7 +122,6 @@ public class CustomCameraActivity extends AppCompatActivity implements View.OnCl
     private void setStartPreview(Camera camera, SurfaceHolder holder) {
         try {
             camera.setPreviewDisplay(holder);
-            camera.setDisplayOrientation(90);
             camera.startPreview();
         } catch (IOException e) {
             e.printStackTrace();
@@ -136,7 +144,7 @@ public class CustomCameraActivity extends AppCompatActivity implements View.OnCl
     protected void onResume() {
         super.onResume();
         if (camera == null) {
-            camera = getCamera();
+            camera = getCamera(0);
             if (holder != null) {
                 setStartPreview(camera, holder);
             }
@@ -152,7 +160,7 @@ public class CustomCameraActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         setStartPreview(camera, holder);
-        Log.e("相机参数:", camera.getParameters().flatten());
+//        Log.e("相机参数:", camera.getParameters().flatten());
     }
 
     @Override

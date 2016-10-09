@@ -27,7 +27,7 @@ public class TakePictureResultActivity extends AppCompatActivity {
             FileInputStream fis = new FileInputStream(picPath);
             Bitmap bmp = BitmapFactory.decodeStream(fis);
             Matrix matrix = new Matrix();
-            matrix.setRotate(90);
+            matrix.setRotate(0);
             bmp = bmp.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
             iv_picture.setImageBitmap(bmp);
         } catch (FileNotFoundException e) {
