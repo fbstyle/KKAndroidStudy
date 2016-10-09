@@ -56,6 +56,12 @@ public class MainActivity extends Activity {
                     case 6:
                         startActivity(FloatingActionButtonActivity.class);
                         break;
+                    case 7:
+                        startActivity(Retrofit2Activity.class);
+                        break;
+                    case 8:
+                        startActivity(LoggerActivity.class);
+                        break;
                 }
             }
         });

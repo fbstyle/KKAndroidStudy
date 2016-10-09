@@ -8,6 +8,8 @@
         <item>RecyclerView局部刷新的基本用法</item>
         <item>自定义Camera</item>
         <item>FloatingActionButton和SnackBar的基本用法</item>
+        <item>Retrofit2基本用法</item>
+        <item>Logger框架基本用法</item>
     </array>
 
     <array name="tabtitles">

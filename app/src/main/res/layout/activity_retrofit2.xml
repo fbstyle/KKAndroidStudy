@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.kkandroidstudy.activity.Retrofit2Activity">
+
+    <Button
+        android:id="@+id/btn_getone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="get请求(第一种方式)" />
+
+    <Button
+        android:id="@+id/btn_gettwo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="get请求(第二种方式)" />
+
+    <Button
+        android:id="@+id/btn_postone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="post请求(第一种方式)" />
+
+    <Button
+        android:id="@+id/btn_posttwo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="post请求(第二种方式)" />
+
+    <Button
+        android:id="@+id/btn_postthree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="post请求(第三种方式)" />
+
+</LinearLayout>
