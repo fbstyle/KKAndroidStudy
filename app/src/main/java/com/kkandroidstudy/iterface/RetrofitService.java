@@ -41,4 +41,21 @@ public interface RetrofitService {
     @POST("/")
     Call<PersonInfo> postThreePersonInfo(@Body RequestInfo requestInfo);
 
+    /**
+     * 示例: http://192.168.0.247/kuke/kukie/user/teacherLogin?userName=我是老师&password=123456
+     */
+    @GET("/kuke/kukie/user/teacherLogin")
+    Call<String> getCookieInfo(@QueryMap Map<String, String> map);
+
+    /**
+     * 示例: "http://192.168.0.247/kuke/kukie/textbook/list?pageNo=1&pageSize=5&textbookName=小汤普森&tbType=1&diffLevel=1"
+     */
+    @GET("/kuke/kukie/textbook/list")
+    Call<String> list(@QueryMap Map<String, String> map);
+
+    /**
+     * 示例: "http://192.168.0.247/kuke/kukie/clazz/list4manage"
+     */
+    @GET("/kuke/kukie/clazz/list4manage")
+    Call<String> listClass();
 }

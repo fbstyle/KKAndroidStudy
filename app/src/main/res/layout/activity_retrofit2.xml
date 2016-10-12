@@ -36,4 +36,27 @@
         android:layout_height="wrap_content"
         android:text="post请求(第三种方式)" />
 
+    <Button
+        android:id="@+id/btn_publiccode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="公共返回字段统一处理" />
+
+    <Button
+        android:id="@+id/btn_cookie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="cookie测试" />
+
+    <Button
+        android:id="@+id/btn_sendCookie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送请求带cookie" />
+
+    <Button
+        android:id="@+id/btn_sendCookie2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送请求带cookie(示例二)" />
 </LinearLayout>

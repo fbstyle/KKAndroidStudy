@@ -3,7 +3,7 @@ package com.kkandroidstudy.network.bean;
 /**
  * Created by shiyan on 2016/10/9.
  */
-public class PersonInfo {
+public class PersonInfo extends BaseBean{
     private String success;
     private Result result;
 
@@ -22,6 +22,7 @@ public class PersonInfo {
     public void setResult(Result result) {
         this.result = result;
     }
+
 
     @Override
     public String toString() {

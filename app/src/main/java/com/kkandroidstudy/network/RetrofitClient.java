@@ -4,9 +4,10 @@ import android.content.Context;
 import android.os.Environment;
 
 import com.kkandroidstudy.BuildConfig;
-import com.kkandroidstudy.application.KKApplication;
 import com.kkandroidstudy.iterface.RetrofitService;
+import com.kkandroidstudy.network.bean.BaseBean;
 import com.kkandroidstudy.util.NetWorkUtil;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +24,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -36,49 +39,52 @@ public class RetrofitClient {
      * <p/>
      * {"success":"1","result":{"status":"ALREADY_ATT","par":"110101","idcard":"110101199001011114","born":"1990年01月01日","sex":"男","att":"北京市 东城区 ","postno":"100000","areano":"010","style_simcall":"中国,北京","style_citynm":"中华人民共和国,北京市"}}
      */
-    private static String baseUrl = " http://api.k780.com:88";
+    public static String baseUrl = " http://api.k780.com:88";
     private static Context context;
+    private static OkHttpClient okHttpClient;
 
     public static RetrofitService getInstance(Context context) {
-        RetrofitClient.context=context;
-        OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
-        //设置超时
-        builder.connectTimeout(15, TimeUnit.SECONDS);
-        builder.readTimeout(20, TimeUnit.SECONDS);
-        builder.writeTimeout(20, TimeUnit.SECONDS);
-        //错误重连
-        builder.retryOnConnectionFailure(true);
+        if (okHttpClient == null) {
+            RetrofitClient.context = context;
+            OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
+            //设置超时
+            builder.connectTimeout(15, TimeUnit.SECONDS);
+            builder.readTimeout(20, TimeUnit.SECONDS);
+            builder.writeTimeout(20, TimeUnit.SECONDS);
+            //错误重连
+            builder.retryOnConnectionFailure(true);
 
-        //OkHttp添加拦截器
-        if (BuildConfig.DEBUG) {
-            // Log信息拦截器
-            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            //设置 Debug Log 模式
-            builder.addInterceptor(loggingInterceptor);
+            //OkHttp添加拦截器
+            if (BuildConfig.DEBUG) {
+                // Log信息拦截器
+                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                //设置 Debug Log 模式
+                builder.addInterceptor(loggingInterceptor);
+            }
+
+            buildCache(builder, true);
+
+            /**
+             *  添加公共参数拦截器
+             */
+            //builder.addInterceptor(addQueryParameterInterceptor);
+
+
+            /**
+             * 添加请求头拦截器
+             */
+            //builder.addInterceptor(headerInterceptor);
+
+
+            /**
+             * 配置Cookie
+             */
+//            buildCookie(builder);
+
+
+            okHttpClient = builder.build();
         }
-
-      buildCache(builder, true);
-
-        /**
-         *  添加公共参数拦截器
-         */
-        //builder.addInterceptor(addQueryParameterInterceptor);
-
-
-        /**
-         * 添加请求头拦截器
-         */
-        //builder.addInterceptor(headerInterceptor);
-
-
-        /**
-         * 配置Cookie
-         */
-        //buildCookie(builder);
-
-
-        OkHttpClient okHttpClient = builder.build();
 
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).client(okHttpClient).build();
@@ -166,9 +172,36 @@ public class RetrofitClient {
      */
     static public void buildCookie(OkHttpClient.Builder builder) {
         CookieManager cookieManager = new CookieManager();
-        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ORIGINAL_SERVER);
         builder.cookieJar(new JavaNetCookieJar(cookieManager));
     }
 
+    /**
+     * 统一处理返回对象公共参数
+     */
+    static public void enqueue(Call call, final Callback callback) {
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, retrofit2.Response response) {
+                BaseBean bean = (BaseBean) response.body();
+                /**
+                 * 公共参数处理
+                 * eg
+                 * if(bean.getCode().equals("xxx")){
+                 *     ........
+                 * }
+                 */
+                if (bean.getCode().equals("305")) {
+                    Logger.d("公共返回code处理");
+                }
+                callback.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                callback.onFailure(call, t);
+            }
+        });
+    }
 
 }
